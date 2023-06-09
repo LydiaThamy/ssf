@@ -50,6 +50,7 @@ public class FrontController {
 		// login.setCaptcha();
 
 		session.setAttribute("login", new Login());
+		System.out.println(((Login) session.getAttribute("login")).getAttempts());
 		model.addAttribute("login", new Login());
 		return "view0";
 	}
@@ -64,11 +65,13 @@ public class FrontController {
 		// if username and password has errors
 		if (result.hasErrors()) {
 			// session.setAttribute("login", login);
+			System.out.println(login.getAttempts());
 			model.addAttribute("login", login);
 			return "view0";
 		}
 
 		login.setAttempts(1);
+		System.out.println(login.getAttempts());
 
 		// if captcha is invalid
 		if (login.getCaptcha() != null && login.getCorrectAnswer() != login.getUserAnswer()) {

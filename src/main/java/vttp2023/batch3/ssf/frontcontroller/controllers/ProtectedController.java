@@ -13,7 +13,7 @@ import vttp2023.batch3.ssf.frontcontroller.services.AuthenticationService;
 @Controller
 @RequestMapping("/protected")
 public class ProtectedController {
-	
+
 	// TODO Task 5
 	// Write a controller to protect resources rooted under /protected
 
@@ -24,7 +24,8 @@ public class ProtectedController {
 	public String getPicture(Model model, HttpSession session) {
 
 		Login login = (Login) session.getAttribute("login");
-		
+		System.out.println(login.getAttempts());
+
 		// check if user is not authenticated
 		if (login.isAuthenticated() == false) {
 			model.addAttribute("login", new Login());
