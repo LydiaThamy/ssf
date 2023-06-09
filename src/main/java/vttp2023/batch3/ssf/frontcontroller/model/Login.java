@@ -1,6 +1,7 @@
 package vttp2023.batch3.ssf.frontcontroller.model;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class Login {
@@ -15,6 +16,7 @@ public class Login {
 
     private String captcha;
     private double correctAnswer;
+
     private double userAnswer;
 
     private boolean authenticated = false;
@@ -115,7 +117,7 @@ public class Login {
         if (action == 0)
             this.attempts = action;
 
-            
+
         if (action == 1)
             this.attempts += action;
     }

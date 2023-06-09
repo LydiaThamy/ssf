@@ -70,9 +70,10 @@ public class FrontController {
 		login.setAttempts(1);
 
 		// if captcha is invalid
-		if (login.getCaptcha() != null && login.getCorrectAnswer() != login.getUserAnswer()) {
+		if (login.getCorrectAnswer() != login.getUserAnswer()) {
 			login.setCaptcha();
 			model.addAttribute("login", login);
+			session.setAttribute("login", login);
 			return "view0";
 		}
 
