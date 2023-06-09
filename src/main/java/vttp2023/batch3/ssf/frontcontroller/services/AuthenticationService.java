@@ -54,7 +54,7 @@ public class AuthenticationService {
 
 		ResponseEntity<String> response = template.exchange(req, String.class);
 
-		System.out.println("Status Code: " + response.getStatusCode());
+		System.out.println("Status Code: " + response.getStatusCode().value());
 
 		// evaluate response entity
 		if (response.getStatusCode().value() == 201) {
