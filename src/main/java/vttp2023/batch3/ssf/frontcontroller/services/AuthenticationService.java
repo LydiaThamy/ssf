@@ -1,9 +1,21 @@
 package vttp2023.batch3.ssf.frontcontroller.services;
 
+import java.io.StringReader;
+import java.util.Collections;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import jakarta.json.Json;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonReader;
 import vttp2023.batch3.ssf.frontcontroller.respositories.AuthenticationRepository;
 
 @Service
@@ -13,12 +25,38 @@ public class AuthenticationService {
 	private AuthenticationRepository repository;
 
 	@Value("${ssf.authentication.api.url}")
-    private String url;
+	private String apiUrl;
 
 	// TODO: Task 2
 	// DO NOT CHANGE THE METHOD'S SIGNATURE
 	// Write the authentication method in here
-	public void authenticate(String username, String password) throws Exception {
+	public boolean authenticate(String username, String password) throws Exception {
+
+		// create json body
+		JsonObject json = Json.createObjectBuilder()
+				.add("username", username)
+				.add("password", password)
+				.build();
+
+		// create request entity
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+
+		RequestEntity<String> req = RequestEntity
+				.post(apiUrl)
+				.contentType(MediaType.APPLICATION_JSON)
+				.headers(headers)
+				.body(json.toString(), String.class);
+
+		RestTemplate template = new RestTemplate();
+
+		ResponseEntity<String> response = template.exchange(req, String.class);
+
+		System.out.println("Status Code: " + response.getStatusCode());
+		// evaluate response entity
+
+		return true;
 	}
 
 	// TODO: Task 3

@@ -65,7 +65,7 @@ public class FrontController {
 		@ModelAttribute("login") @Valid Login login, 
 		BindingResult result, 
 		HttpSession session,
-		Model model) {
+		Model model) throws Exception {
 
 			// retrieve username and password
 			if (result.hasErrors()) {
@@ -74,18 +74,22 @@ public class FrontController {
 				return "view0";
 			}
 
+			login.setAttempts(1);
+
 			// if captcha is not null
 			// if captcha is invalid
 			if (login.getCaptcha() != null && login.getCorrectAnswer() != login.getUserAnswer()) {
-					login.setAttempts(1);
 					login.setCaptcha();
 					model.addAttribute("login", login);
 					return "view0";
 			} 
 
-
 			// authenticate user
-
+			boolean authResult = service.authenticate(login.getUsername(), login.getPassword());
+			if (authResult == true) {
+				return "view1";
+			}
+			
 		return "view0";
 	}
 	
