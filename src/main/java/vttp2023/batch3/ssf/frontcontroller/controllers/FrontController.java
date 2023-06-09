@@ -26,7 +26,7 @@ public class FrontController {
 	public String getLoginPage(Model model, HttpSession session) {
 
 		Login login = (Login) session.getAttribute("login");
-		
+
 		// if person has not logged in before
 		if (login == null) {
 			model.addAttribute("login", new Login());
@@ -62,36 +62,41 @@ public class FrontController {
 
 	@PostMapping(path = "/login", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.TEXT_HTML_VALUE)
 	public String tryLogin(
-		@ModelAttribute("login") @Valid Login login, 
-		BindingResult result, 
-		HttpSession session,
-		Model model) throws Exception {
+			@ModelAttribute("login") @Valid Login login,
+			BindingResult result,
+			HttpSession session,
+			Model model) throws Exception {
 
-			// retrieve username and password
-			if (result.hasErrors()) {
-				System.out.println(login);
-				model.addAttribute("login", login);
-				return "view0";
-			}
+		// if username and password has errors
+		if (result.hasErrors()) {
+			System.out.println(login);
+			model.addAttribute("login", login);
+			return "view0";
+		}
 
-			login.setAttempts(1);
+		login.setAttempts(1);
 
-			// if captcha is not null
-			// if captcha is invalid
-			if (login.getCaptcha() != null && login.getCorrectAnswer() != login.getUserAnswer()) {
-					login.setCaptcha();
-					model.addAttribute("login", login);
-					return "view0";
-			} 
+		// if captcha is invalid
+		if (login.getCaptcha() != null && login.getCorrectAnswer() != login.getUserAnswer()) {
+			login.setCaptcha();
+			model.addAttribute("login", login);
+			return "view0";
+		}
 
-			// authenticate user
-			boolean authResult = service.authenticate(login.getUsername(), login.getPassword());
-			if (authResult == true) {
-				return "view1";
-			}
-			
+		// authenticate user
+		boolean authResult = service.authenticate(login.getUsername(), login.getPassword());
+		// if valid
+		if (authResult == true) {
+			login.isAuthenticated();
+			session.setAttribute("login", login);
+			// go to protected controller
+			return "view1";
+		}
+
+		// if invalid
+		login.setCaptcha();
+		model.addAttribute("login", login);
 		return "view0";
 	}
-	
-	
+
 }

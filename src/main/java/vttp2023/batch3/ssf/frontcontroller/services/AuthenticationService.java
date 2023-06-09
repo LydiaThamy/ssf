@@ -45,8 +45,7 @@ public class AuthenticationService {
 
 		RequestEntity<String> req = RequestEntity
 				.post(apiUrl)
-				.contentType(MediaType.APPLICATION_JSON)
-				.headers(headers)
+				.contentType(MediaType.APPLICATION_JSON).headers(headers)
 				.body(json.toString(), String.class);
 
 		RestTemplate template = new RestTemplate();
