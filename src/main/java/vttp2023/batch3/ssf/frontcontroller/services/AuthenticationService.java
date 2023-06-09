@@ -75,14 +75,13 @@ public class AuthenticationService {
 	// DO NOT CHANGE THE METHOD'S SIGNATURE
 	// Write an implementation to disable a user account for 30 mins
 	public void disableUser(String username) {
-		
+		repository.disableUser(username);
 	}
 
 	// TODO: Task 5
 	// DO NOT CHANGE THE METHOD'S SIGNATURE
 	// Write an implementation to check if a given user's login has been disabled
 	public boolean isLocked(String username) {
-		// call repo
-		return false;
+		return repository.isLocked(username);
 	}
 }

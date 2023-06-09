@@ -29,26 +29,27 @@ public class FrontController {
 	@GetMapping("/")
 	public String getLoginPage(Model model, HttpSession session) {
 
-		Login login = (Login) session.getAttribute("login");
+		session.invalidate();
+		// Login login = (Login) session.getAttribute("login");
 
-		// if person has not logged in before
-		if (login == null) {
-			model.addAttribute("login", new Login());
-			return "view0";
-		}
+		// // if person has not logged in before
+		// if (login == null) {
+		// 	model.addAttribute("login", new Login());
+		// 	return "view0";
+		// }
 
-		// if person has been authenticated --> pressed logout button
-		boolean loggedOut = login.isAuthenticated();
-		if (loggedOut == true) {
-			session.invalidate();
-			model.addAttribute("login", new Login());
-			return "view0";
-		}
+		// // if person has been authenticated --> pressed logout button
+		// boolean loggedOut = login.isAuthenticated();
+		// if (loggedOut == true) {
+			
+		// 	model.addAttribute("login", new Login());
+		// 	return "view0";
+		// }
 
-		// if person has not attempted more than 3 times
-		login.setCaptcha();
-		session.setAttribute("login", login);
-		model.addAttribute("login", login);
+		// // if person has not attempted more than 3 times
+		// login.setCaptcha();
+		session.setAttribute("login", new Login());
+		model.addAttribute("login", new Login());
 		return "view0";
 	}
 
