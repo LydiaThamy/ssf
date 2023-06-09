@@ -64,24 +64,26 @@ public class AuthenticationService {
 		// boolean status = response.getStatusCode().is1xxInformational();
 		// System.out.println("Status Code: " + status);
 
-		if (response.getStatusCode().is1xxInformational()) {
-			return "created";
-		}
-
-		if (response.getStatusCode().is4xxClientError()) {
-			return "bad request";
-		}
-
-		if (response.getStatusCode().is4xxClientError()) {
-			return "unauthorized";
-		}
-		// // evaluate response entity
-		// int status = response.getStatusCode().value();
-		// System.out.println("Status Code: " + status);
-
-		// if (status == 201) {
+		// if (response.getStatusCode().is1xxInformational()) {
 		// 	return "created";
 		// }
+
+		// if (response.getStatusCode().is4xxClientError()) {
+		// 	return "bad request";
+		// }
+
+		// if (response.getStatusCode().is4xxClientError()) {
+		// 	return "unauthorized";
+		// }
+		// evaluate response entity
+		int status = response.getStatusCode().value();
+		System.out.println("Status Code: " + status);
+
+		if (status == 201) {
+			return "created";
+		} else {
+
+		}
 
 		// if (status == 400) {
 		// 	return "bad request";
