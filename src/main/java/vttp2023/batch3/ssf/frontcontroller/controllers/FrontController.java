@@ -62,8 +62,8 @@ public class FrontController {
 
 		// if username and password has errors
 		if (result.hasErrors()) {
+			// session.setAttribute("login", login);
 			model.addAttribute("login", login);
-			session.setAttribute("login", login);
 			return "view0";
 		}
 
