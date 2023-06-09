@@ -34,25 +34,12 @@ public class FrontController {
 			return "view0";
 		}
 
-		// if person has logged in before
 		// if person has been authenticated --> pressed logout button
 		boolean loggedOut = login.isAuthenticated();
 		if (loggedOut == true) {
 			session.invalidate();
 			model.addAttribute("login", new Login());
 			return "view0";
-		}
-
-		// if person has not been authenticated
-		// if person has attempted login for more than 3 times
-		if (login.getAttempts() > 3) {
-
-			service.disableUser(login.getUsername());
-
-			session.invalidate();
-			model.addAttribute("username", login.getUsername());
-
-			return "view2";
 		}
 
 		// if person has not attempted more than 3 times
@@ -70,7 +57,9 @@ public class FrontController {
 
 		// if username and password has errors
 		if (result.hasErrors()) {
-			System.out.println(login);
+			if (login.getCaptcha() != null) {
+				login.setCaptcha();
+			}
 			model.addAttribute("login", login);
 			return "view0";
 		}
@@ -82,6 +71,17 @@ public class FrontController {
 			login.setCaptcha();
 			model.addAttribute("login", login);
 			return "view0";
+		}
+
+		// if person has attempted login for more than 3 times
+		if (login.getAttempts() > 3) {
+
+			service.disableUser(login.getUsername());
+
+			session.invalidate();
+			model.addAttribute("username", login.getUsername());
+
+			return "view2";
 		}
 
 		// authenticate user
