@@ -29,8 +29,11 @@ public class AuthenticationService {
 	// Write the authentication method in here
 	public String authenticate(String username, String password) throws Exception {
 
+		System.out.println("validating login...");
+
 		// check if user is locked
 		if (isLocked(username)) {
+			System.out.println("username is locked...");
 			return "locked";
 		}
 
@@ -55,7 +58,7 @@ public class AuthenticationService {
 
 		RestTemplate template = new RestTemplate();
 		ResponseEntity<String> response = template.exchange(req, String.class);
-		
+
 		// evaluate response entity
 		int status = response.getStatusCode().value();
 		System.out.println("Status Code: " + status);
@@ -80,6 +83,7 @@ public class AuthenticationService {
 	// DO NOT CHANGE THE METHOD'S SIGNATURE
 	// Write an implementation to disable a user account for 30 mins
 	public void disableUser(String username) {
+		System.out.println("Username disabled due to mulitple log ins...");
 		repository.disableUser(username);
 	}
 

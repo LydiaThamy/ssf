@@ -75,7 +75,7 @@ public class FrontController {
 
 		// if captcha is invalid
 		if (login.getCaptcha() != null && login.getCorrectAnswer() != login.getUserAnswer()) {
-			// System.out.println(login.getUserAnswer());
+			System.out.println("Captcha present and answer is wrong...");
 			login.setCaptcha();
 			model.addAttribute("login", login);
 			session.setAttribute("login", login);
@@ -84,8 +84,8 @@ public class FrontController {
 
 		// if person has attempted login for more than 3 times
 		if (login.getAttempts() > 3) {
-			service.disableUser(login.getUsername());
 
+			service.disableUser(login.getUsername());
 			session.invalidate();
 			model.addAttribute("username", login.getUsername());
 			return "view2";
@@ -114,12 +114,16 @@ public class FrontController {
 		// if invalid
 		// add error to page
 		if (authResult.equals("bad request")) {
+			System.out.println("bad request...");
 			result.addError(new ObjectError("message", "Invalid payload"));
 		} else if (authResult.equals("unauthorized")) {
+			System.out.println("unauthorized...");
 			result.addError(new ObjectError("message", "Incorrect username and/or password"));
 		} else {
+			System.out.println("unknown error...");
 			result.addError(new ObjectError("message", "Unknown error"));
 		}
+		
 		login.setCaptcha();
 		model.addAttribute("login", login);
 		session.setAttribute("login", login);

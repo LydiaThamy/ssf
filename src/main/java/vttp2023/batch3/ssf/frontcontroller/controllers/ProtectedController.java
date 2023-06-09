@@ -28,10 +28,13 @@ public class ProtectedController {
 
 		// check if user is not authenticated
 		if (login.isAuthenticated() == false) {
+			System.out.println("fake login...");
 			model.addAttribute("login", new Login());
 			session.invalidate();
 			return "view0";
 		}
+
+		System.out.println("log in successful...");
 
 		return "view1";
 	}
