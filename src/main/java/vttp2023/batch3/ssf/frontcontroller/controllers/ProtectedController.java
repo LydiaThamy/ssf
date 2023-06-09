@@ -24,7 +24,6 @@ public class ProtectedController {
 	public String getPicture(Model model, HttpSession session) {
 
 		Login login = (Login) session.getAttribute("login");
-		session.setAttribute("login", login);
 		
 		// check if user is not authenticated
 		if (login.isAuthenticated() == false) {

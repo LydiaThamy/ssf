@@ -29,7 +29,7 @@ public class FrontController {
 	@GetMapping("/")
 	public String getLoginPage(Model model, HttpSession session) {
 
-		session.invalidate();
+		// session.invalidate();
 		// Login login = (Login) session.getAttribute("login");
 
 		// // if person has not logged in before
@@ -62,9 +62,6 @@ public class FrontController {
 
 		// if username and password has errors
 		if (result.hasErrors()) {
-			if (login.getCaptcha() != null) {
-				login.setCaptcha();
-			}
 			model.addAttribute("login", login);
 			session.setAttribute("login", login);
 			return "view0";
