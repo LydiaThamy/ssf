@@ -81,20 +81,17 @@ public class AuthenticationService {
 
 		if (status == 201) {
 			return "created";
-		} else {
-
 		}
 
-		// if (status == 400) {
-		// 	return "bad request";
-		// }
+		if (status == 400) {
+			return "bad request";
+		}
 
-		// if (status == 401) {
-		// 	return "unauthorized";
-		// }
+		if (status == 401) {
+			return "unauthorized";
+		}
 
 		return "unknown";
-
 	}
 
 	// TODO: Task 3
