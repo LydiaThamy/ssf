@@ -94,11 +94,11 @@ public class FrontController {
 		if (authResult.equals("created")) {
 
 			login.isAuthenticated();
-			login.setAttempts(0);
+			// login.setAttempts(0);
 
 			session.setAttribute("login", login);
 			// go to protected controller
-			protectedController.getPicture(model, session);
+			return protectedController.getPicture(model, session);
 		}
 
 		// if invalid
