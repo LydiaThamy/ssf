@@ -45,7 +45,7 @@ public class AuthenticationService {
 
 		RequestEntity<String> req = RequestEntity
 				.post(apiUrl)
-				.contentType(MediaType.APPLICATION_JSON).headers(headers)
+				.headers(headers)
 				.body(json.toString(), String.class);
 
 		RestTemplate template = new RestTemplate();
@@ -53,6 +53,7 @@ public class AuthenticationService {
 		ResponseEntity<String> response = template.exchange(req, String.class);
 
 		System.out.println("Status Code: " + response.getStatusCode());
+
 		// evaluate response entity
 
 		return true;
