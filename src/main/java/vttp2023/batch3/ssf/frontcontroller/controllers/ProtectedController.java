@@ -33,6 +33,7 @@ public class ProtectedController {
 			return controller.getLoginPage(model, session);
 		}
 
+		session.setAttribute("login", login);
 		return "view1";
 	}
 }

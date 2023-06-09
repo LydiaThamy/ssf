@@ -23,6 +23,9 @@ public class FrontController {
 	@Autowired
 	private AuthenticationService service;
 
+	@Autowired
+	private ProtectedController protectedController;
+
 	@GetMapping("/")
 	public String getLoginPage(Model model, HttpSession session) {
 
@@ -94,7 +97,7 @@ public class FrontController {
 
 			session.setAttribute("login", login);
 			// go to protected controller
-			return "view1";
+			protectedController.getPicture(model, session);
 		}
 
 		// if invalid
