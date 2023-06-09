@@ -20,20 +20,18 @@ public class ProtectedController {
 	@Autowired
 	private AuthenticationService service;
 
-	@Autowired
-	private FrontController controller;
-
 	@GetMapping("/view1.html")
 	public String getPicture(Model model, HttpSession session) {
 
 		Login login = (Login) session.getAttribute("login");
+		session.setAttribute("login", login);
 		
 		// check if user is authenticated
 		if (login.isAuthenticated() == false) {
-			return controller.getLoginPage(model, session);
+			model.addAttribute("login", new Login());
+			return "view0";
 		}
 
-		session.setAttribute("login", login);
 		return "view1";
 	}
 }
