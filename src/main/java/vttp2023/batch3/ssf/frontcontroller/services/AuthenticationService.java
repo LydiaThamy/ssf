@@ -1,6 +1,19 @@
 package vttp2023.batch3.ssf.frontcontroller.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+import vttp2023.batch3.ssf.frontcontroller.respositories.AuthenticationRepository;
+
+@Service
 public class AuthenticationService {
+
+	@Autowired
+	private AuthenticationRepository repository;
+
+	@Value("${ssf.authentication.api.url}")
+    private String url;
 
 	// TODO: Task 2
 	// DO NOT CHANGE THE METHOD'S SIGNATURE
