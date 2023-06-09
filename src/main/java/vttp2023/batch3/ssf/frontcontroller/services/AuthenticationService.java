@@ -30,7 +30,7 @@ public class AuthenticationService {
 	// TODO: Task 2
 	// DO NOT CHANGE THE METHOD'S SIGNATURE
 	// Write the authentication method in here
-	public boolean authenticate(String username, String password) throws Exception {
+	public String authenticate(String username, String password) throws Exception {
 
 		// create json body
 		JsonObject json = Json.createObjectBuilder()
@@ -42,6 +42,8 @@ public class AuthenticationService {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+
+		System.out.println(apiUrl);
 
 		RequestEntity<String> req = RequestEntity
 				.post(apiUrl)
@@ -55,8 +57,12 @@ public class AuthenticationService {
 		System.out.println("Status Code: " + response.getStatusCode());
 
 		// evaluate response entity
+		if (response.getStatusCode().value() == 201) {
+			return "created";
+		}
 
-		return true;
+		return "unknown";
+
 	}
 
 	// TODO: Task 3

@@ -84,9 +84,9 @@ public class FrontController {
 		}
 
 		// authenticate user
-		boolean authResult = service.authenticate(login.getUsername(), login.getPassword());
+		String authResult = service.authenticate(login.getUsername(), login.getPassword());
 		// if valid
-		if (authResult == true) {
+		if (authResult.equals("created")) {
 			login.isAuthenticated();
 			session.setAttribute("login", login);
 			// go to protected controller
