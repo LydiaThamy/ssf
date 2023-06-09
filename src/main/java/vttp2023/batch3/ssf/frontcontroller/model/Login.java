@@ -16,7 +16,6 @@ public class Login {
 
     private String captcha;
     private double correctAnswer;
-
     private double userAnswer;
 
     private boolean authenticated = false;

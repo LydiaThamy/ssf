@@ -47,6 +47,7 @@ public class FrontController {
 
 		// if person has not attempted more than 3 times
 		login.setCaptcha();
+		session.setAttribute("login", login);
 		model.addAttribute("login", login);
 		return "view0";
 	}
@@ -58,12 +59,15 @@ public class FrontController {
 			HttpSession session,
 			Model model) throws Exception {
 
+		
+
 		// if username and password has errors
 		if (result.hasErrors()) {
 			if (login.getCaptcha() != null) {
 				login.setCaptcha();
 			}
 			model.addAttribute("login", login);
+			session.setAttribute("login", login);
 			return "view0";
 		}
 
@@ -71,6 +75,7 @@ public class FrontController {
 
 		// if captcha is invalid
 		if (login.getCorrectAnswer() != login.getUserAnswer()) {
+			System.out.println(login.getUserAnswer());
 			login.setCaptcha();
 			model.addAttribute("login", login);
 			session.setAttribute("login", login);
@@ -84,7 +89,7 @@ public class FrontController {
 
 			session.invalidate();
 			model.addAttribute("username", login.getUsername());
-
+			session.setAttribute("login", login);
 			return "view2";
 		}
 
