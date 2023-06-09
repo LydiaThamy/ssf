@@ -26,7 +26,7 @@ public class ProtectedController {
 		Login login = (Login) session.getAttribute("login");
 		session.setAttribute("login", login);
 		
-		// check if user is authenticated
+		// check if user is not authenticated
 		if (login.isAuthenticated() == false) {
 			model.addAttribute("login", new Login());
 			return "view0";

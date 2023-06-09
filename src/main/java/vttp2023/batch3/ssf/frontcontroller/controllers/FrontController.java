@@ -59,8 +59,6 @@ public class FrontController {
 			HttpSession session,
 			Model model) throws Exception {
 
-		
-
 		// if username and password has errors
 		if (result.hasErrors()) {
 			if (login.getCaptcha() != null) {
@@ -74,7 +72,7 @@ public class FrontController {
 		login.setAttempts(1);
 
 		// if captcha is invalid
-		if (login.getCorrectAnswer() != login.getUserAnswer()) {
+		if (login.getCaptcha() != null && login.getCorrectAnswer() != login.getUserAnswer()) {
 			System.out.println(login.getUserAnswer());
 			login.setCaptcha();
 			model.addAttribute("login", login);
@@ -86,10 +84,9 @@ public class FrontController {
 		if (login.getAttempts() > 3) {
 
 			service.disableUser(login.getUsername());
-
 			session.invalidate();
+
 			model.addAttribute("username", login.getUsername());
-			session.setAttribute("login", login);
 			return "view2";
 		}
 
