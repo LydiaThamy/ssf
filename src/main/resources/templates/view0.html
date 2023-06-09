@@ -37,7 +37,7 @@
 					<p>What is <span th:text="*{captcha}"></span> ?</p>
 				</td>
 			</tr>
-			<tr>
+			<tr th:if="*{captcha} != null">
 				<td>
 					<label for="userAnswer">Answer:</label>
 				</td>
