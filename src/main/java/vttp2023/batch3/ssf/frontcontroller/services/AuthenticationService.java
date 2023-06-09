@@ -5,6 +5,7 @@ import java.util.Collections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -60,20 +61,35 @@ public class AuthenticationService {
 		ResponseEntity<String> response = template.exchange(req, String.class);
 
 		// evaluate response entity
-		int status = response.getStatusCode().value();
-		System.out.println("Status Code: " + status);
+		// boolean status = response.getStatusCode().is1xxInformational();
+		// System.out.println("Status Code: " + status);
 
-		if (status == 201) {
+		if (response.getStatusCode().is1xxInformational()) {
 			return "created";
 		}
 
-		if (status == 400) {
+		if (response.getStatusCode().is4xxClientError()) {
 			return "bad request";
 		}
 
-		if (status == 401) {
+		if (response.getStatusCode().is4xxClientError()) {
 			return "unauthorized";
 		}
+		// // evaluate response entity
+		// int status = response.getStatusCode().value();
+		// System.out.println("Status Code: " + status);
+
+		// if (status == 201) {
+		// 	return "created";
+		// }
+
+		// if (status == 400) {
+		// 	return "bad request";
+		// }
+
+		// if (status == 401) {
+		// 	return "unauthorized";
+		// }
 
 		return "unknown";
 
