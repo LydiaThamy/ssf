@@ -110,8 +110,14 @@ public class Login {
         return attempts;
     }
     
-    public void setAttempts(int increase) {
-        this.attempts += increase;
+    public void setAttempts(int action) {
+        // reset attempts
+        if (action == 0)
+            this.attempts = action;
+
+            
+        if (action == 1)
+            this.attempts += action;
     }
 
     // toString method

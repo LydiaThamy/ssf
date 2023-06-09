@@ -88,12 +88,17 @@ public class FrontController {
 		String authResult = service.authenticate(login.getUsername(), login.getPassword());
 		// if valid
 		if (authResult.equals("created")) {
+
 			login.isAuthenticated();
+			login.setAttempts(0);
+
 			session.setAttribute("login", login);
 			// go to protected controller
 			return "view1";
 		}
 
+		// if invalid
+		// add error to page
 		if (authResult.equals("bad request")) {
 			result.addError(new ObjectError("message", "Invalid payload"));
 		} else if (authResult.equals("unauthorized")) {
@@ -102,9 +107,10 @@ public class FrontController {
 			result.addError(new ObjectError("message", "Unknown error"));
 		}
 
-		// if invalid
 		login.setCaptcha();
 		model.addAttribute("login", login);
+		session.setAttribute("login", login);
+
 		return "view0";
 	}
 

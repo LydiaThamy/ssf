@@ -44,7 +44,7 @@
 			</tr>
 			<tr th:if="*{captcha} != null">
 				<td>
-					<label for="userAnswer">Answer:</label>
+					<label for="userAnswer">Answer: <span th:text="*{correctAnswer}"></span></label>
 				</td>
 				<td>
 					<input type="number" id="userAnswer" size="30" placeholder="Please type in your password" th:field="*{userAnswer}">
