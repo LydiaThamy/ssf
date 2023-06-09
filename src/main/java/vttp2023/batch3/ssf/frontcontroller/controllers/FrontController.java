@@ -93,7 +93,7 @@ public class FrontController {
 		// if valid
 		if (authResult.equals("created")) {
 
-			login.isAuthenticated();
+			login.setAuthenticated();
 			// login.setAttempts(0);
 
 			session.setAttribute("login", login);

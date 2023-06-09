@@ -18,10 +18,17 @@ public class AuthenticationRepository {
 	private RedisTemplate<String, Object> template;
 
 	public void disableUser(String username) {
+		template.opsForValue().set(username, "locked", 30, TimeUnit.MINUTES);
 		System.out.println("disabled " + username);
 	}
 
 	public boolean isLocked(String username) {
+
+		String value = (String) template.opsForValue().get(username);
+		if (value != null && value.equals("locked")) {
+			return true;
+		}
+
 		return false;
 	}
 
