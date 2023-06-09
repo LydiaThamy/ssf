@@ -68,6 +68,11 @@ public class FrontController {
 		BindingResult result, 
 		HttpSession session,
 		Model model) {
+
+			if (result.hasErrors()) {
+				return "view0";
+			}
+			
 		return "view1";
 	}
 	
