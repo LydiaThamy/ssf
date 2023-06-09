@@ -21,6 +21,9 @@ public class Login {
 
     private boolean locked = false;
 
+    private int attempts = 0;
+    
+
     // constructor
     public Login() {
     }
@@ -102,6 +105,14 @@ public class Login {
     public void setLocked() {
         this.locked = true;
     }
+    
+    public int getAttempts() {
+        return attempts;
+    }
+    
+    public void setAttempts(int increase) {
+        this.attempts += increase;
+    }
 
     // toString method
     @Override
@@ -109,5 +120,5 @@ public class Login {
         return "Login [username=" + username + ", password=" + password + ", captcha=" + captcha + ", answer=" + correctAnswer
                 + ", authenticated=" + authenticated + ", locked=" + locked + "]";
     }
-
+    
 }

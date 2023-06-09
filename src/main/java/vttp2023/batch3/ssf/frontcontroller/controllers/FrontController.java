@@ -44,8 +44,7 @@ public class FrontController {
 
 		// if person has not been authenticated
 		// if person has attempted login for more than 3 times
-		int attempts = (int) session.getAttribute("attempts");
-		if (attempts > 3) {
+		if (login.getAttempts() > 3) {
 
 			service.disableUser(login.getUsername());
 
@@ -58,7 +57,6 @@ public class FrontController {
 		// if person has not attempted more than 3 times
 		login.setCaptcha();
 		model.addAttribute("login", login);
-
 		return "view0";
 	}
 
@@ -69,11 +67,26 @@ public class FrontController {
 		HttpSession session,
 		Model model) {
 
+			// retrieve username and password
 			if (result.hasErrors()) {
+				System.out.println(login);
+				model.addAttribute("login", login);
 				return "view0";
 			}
-			
-		return "view1";
+
+			// if captcha is not null
+			// if captcha is invalid
+			if (login.getCaptcha() != null && login.getCorrectAnswer() != login.getUserAnswer()) {
+					login.setAttempts(1);
+					login.setCaptcha();
+					model.addAttribute("login", login);
+					return "view0";
+			} 
+
+
+			// authenticate user
+
+		return "view0";
 	}
 	
 	
