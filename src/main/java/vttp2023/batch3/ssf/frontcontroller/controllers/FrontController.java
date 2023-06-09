@@ -5,6 +5,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -91,6 +92,14 @@ public class FrontController {
 			session.setAttribute("login", login);
 			// go to protected controller
 			return "view1";
+		}
+
+		if (authResult.equals("bad request")) {
+			result.addError(new ObjectError("message", "Invalid payload"));
+		} else if (authResult.equals("unauthorized")) {
+			result.addError(new ObjectError("message", "Incorrect username and/or password"));
+		} else {
+			result.addError(new ObjectError("message", "Unknown error"));
 		}
 
 		// if invalid
