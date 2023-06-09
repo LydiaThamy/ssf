@@ -1,6 +1,5 @@
 package vttp2023.batch3.ssf.frontcontroller.services;
 
-import java.io.StringReader;
 import java.util.Collections;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +10,9 @@ import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
-import jakarta.json.JsonReader;
 import vttp2023.batch3.ssf.frontcontroller.respositories.AuthenticationRepository;
 
 @Service
@@ -47,18 +44,27 @@ public class AuthenticationService {
 
 		RequestEntity<String> req = RequestEntity
 				.post(apiUrl)
-				.headers(headers)
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON)
 				.body(json.toString(), String.class);
 
 		RestTemplate template = new RestTemplate();
-
 		ResponseEntity<String> response = template.exchange(req, String.class);
-
-		System.out.println("Status Code: " + response.getStatusCode().value());
-
+		
 		// evaluate response entity
-		if (response.getStatusCode().value() == 201) {
+		int status = response.getStatusCode().value();
+		System.out.println("Status Code: " + status);
+
+		if (status == 201) {
 			return "created";
+		}
+
+		if (status == 400) {
+			return "bad request";
+		}
+
+		if (status == 401) {
+			return "unauthorized";
 		}
 
 		return "unknown";
