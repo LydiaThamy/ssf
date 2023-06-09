@@ -28,6 +28,7 @@ public class ProtectedController {
 		// check if user is not authenticated
 		if (login.isAuthenticated() == false) {
 			model.addAttribute("login", new Login());
+			session.invalidate();
 			return "view0";
 		}
 

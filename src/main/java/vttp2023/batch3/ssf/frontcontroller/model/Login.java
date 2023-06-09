@@ -1,7 +1,6 @@
 package vttp2023.batch3.ssf.frontcontroller.model;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class Login {
@@ -14,7 +13,7 @@ public class Login {
     @Size(min = 2, message = "Your password must be at least 2 characters in length")
     private String password;
 
-    private String captcha;
+    private String captcha = null;
     private double correctAnswer;
     private double userAnswer;
 

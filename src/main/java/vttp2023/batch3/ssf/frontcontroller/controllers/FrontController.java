@@ -34,20 +34,21 @@ public class FrontController {
 
 		// // if person has not logged in before
 		// if (login == null) {
-		// 	model.addAttribute("login", new Login());
-		// 	return "view0";
+		// model.addAttribute("login", new Login());
+		// return "view0";
 		// }
 
 		// // if person has been authenticated --> pressed logout button
 		// boolean loggedOut = login.isAuthenticated();
 		// if (loggedOut == true) {
-			
-		// 	model.addAttribute("login", new Login());
-		// 	return "view0";
+
+		// model.addAttribute("login", new Login());
+		// return "view0";
 		// }
 
 		// // if person has not attempted more than 3 times
 		// login.setCaptcha();
+
 		session.setAttribute("login", new Login());
 		model.addAttribute("login", new Login());
 		return "view0";
@@ -71,7 +72,7 @@ public class FrontController {
 
 		// if captcha is invalid
 		if (login.getCaptcha() != null && login.getCorrectAnswer() != login.getUserAnswer()) {
-			System.out.println(login.getUserAnswer());
+			// System.out.println(login.getUserAnswer());
 			login.setCaptcha();
 			model.addAttribute("login", login);
 			session.setAttribute("login", login);
@@ -80,22 +81,28 @@ public class FrontController {
 
 		// if person has attempted login for more than 3 times
 		if (login.getAttempts() > 3) {
-
 			service.disableUser(login.getUsername());
-			session.invalidate();
 
+			session.invalidate();
 			model.addAttribute("username", login.getUsername());
 			return "view2";
 		}
 
 		// authenticate user
 		String authResult = service.authenticate(login.getUsername(), login.getPassword());
+
+		// if locked
+		if (authResult.equals("locked")) {
+			model.addAttribute("username", login.getUsername());
+			session.invalidate();
+			return "view2";
+		}
+
 		// if valid
 		if (authResult.equals("created")) {
 
 			login.setAuthenticated();
 			// login.setAttempts(0);
-
 			session.setAttribute("login", login);
 			// go to protected controller
 			return protectedController.getPicture(model, session);
@@ -110,7 +117,6 @@ public class FrontController {
 		} else {
 			result.addError(new ObjectError("message", "Unknown error"));
 		}
-
 		login.setCaptcha();
 		model.addAttribute("login", login);
 		session.setAttribute("login", login);

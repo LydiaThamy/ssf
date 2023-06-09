@@ -29,6 +29,11 @@ public class AuthenticationService {
 	// Write the authentication method in here
 	public String authenticate(String username, String password) throws Exception {
 
+		// check if user is locked
+		if (isLocked(username)) {
+			return "locked";
+		}
+
 		// create json body
 		JsonObject json = Json.createObjectBuilder()
 				.add("username", username)
